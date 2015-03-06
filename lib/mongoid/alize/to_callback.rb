@@ -126,7 +126,7 @@ module Mongoid
 
       def set_callback
         unless callback_attached?("save", aliased_callback_name)
-          klass.set_callback(:save, :after, aliased_callback_name)
+          klass.set_callback(:save, :after, aliased_callback_name, options)
         end
       end
 

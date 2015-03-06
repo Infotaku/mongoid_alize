@@ -30,13 +30,13 @@ module Mongoid
 
         options = fields.extract_options!
         if options[:fields]
-          fields = options[:fields]
+          fields = options.delete(:fields)
         elsif fields.empty? && !_alize_unknown_inverse?(metadata)
           fields = metadata.klass.default_alize_fields
         end
 
         (klass.alize_from_callbacks ||= []) << callback =
-          callback_klass.new(klass, relation, fields)
+          callback_klass.new(klass, relation, fields, options)
         callback.attach
 
       end
@@ -50,13 +50,13 @@ module Mongoid
 
         options = fields.extract_options!
         if options[:fields]
-          fields = options[:fields]
+          fields = options.delete(:fields)
         elsif fields.empty?
           fields = klass.default_alize_fields
         end
 
         (klass.alize_to_callbacks ||= []) << callback =
-          Mongoid::Alize::ToCallback.new(klass, relation, fields)
+          Mongoid::Alize::ToCallback.new(klass, relation, fields, options)
         callback.attach
 
       end

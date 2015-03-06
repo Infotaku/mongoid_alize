@@ -3,6 +3,7 @@ module Mongoid
     class Callback
 
       attr_accessor :denorm_attrs
+      attr_accessor :options
 
       attr_accessor :klass
       attr_accessor :relation
@@ -14,12 +15,13 @@ module Mongoid
 
       attr_accessor :debug
 
-      def initialize(_klass, _relation, _denorm_attrs)
+      def initialize(_klass, _relation, _denorm_attrs, _options = {})
         self.debug = ENV["ALIZE_DEBUG"]
 
         self.klass = _klass
         self.relation = _relation
         self.denorm_attrs = _denorm_attrs
+        self.options = _options
 
         self.metadata = _klass.relations[_relation.to_s]
         if !(self.metadata.polymorphic? &&
