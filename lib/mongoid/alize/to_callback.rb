@@ -37,6 +37,7 @@ module Mongoid
                 #{relation_push('prefixed_name', 'field_values')}
               end
 
+              relation.run_after_callbacks :update
             end
 
             #{debug ? "puts \"#{callback_name}\"": ""}
